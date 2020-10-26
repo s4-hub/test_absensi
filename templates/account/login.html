@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Log-in{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+{% endblock style %}
+
+{% block breadcrumbs %}
+
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-t-85 p-b-20">
+                    <form action="{% url 'login' %}" method="post">
+                        <!-- {{ form.as_p }} -->
+                        {% csrf_token %}
+                        <span class="login100-form-title p-b-70">
+                            Selamat Datang
+                        </span>
+                        <!-- <span class="login100-form-avatar">
+                            <img src="images/avatar-01.jpg" alt="AVATAR">
+                        </span> -->
+                        <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
+                            <input class="input100" type="text" required_id="id_username" name="username"
+                                maxlength="150">
+                            <span class="focus-input100" data-placeholder="Nama Pengguna"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+                            <input class="input100" type="password" name="password" required_id="id_password">
+                            <span class="focus-input100" data-placeholder="Sandi"></span>
+                        </div>
+                        <div class="container-login100-form-btn">
+                            <button type="submit" class="login100-form-btn">
+                                Login
+                            </button>
+                        </div>
+                        <ul class="login-more p-t-190">
+                            <li class="m-b-8">
+                                <span class="txt1">
+                                    Lupa
+                                </span>
+                                <a href="#" class="txt2">
+                                    Nama Pengguna / Sandi?
+                                </a>
+                            </li>
+                            <li>
+                                <span class="txt1">
+                                    Tidak Punya akun?
+                                </span>
+                                <a href="#" class="txt2">
+                                    Daftar
+                                </a>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
+<script src="{% static 'js/main1.js' %}"></script>
+{% endblock script %}

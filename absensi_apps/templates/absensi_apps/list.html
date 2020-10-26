@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for data in datas  %}
+<li>
+    {{data.peserta.user.nama}}
+</li>
+<li>
+    {{data.scan_jam}}
+</li>
+<li>
+    {{data.status}}
+</li>
+{% endfor %}
+{% endblock content %}

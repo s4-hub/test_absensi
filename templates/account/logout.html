@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Logged out{% endblock %}
+
+{% block style %}
+{% endblock style %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-12">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li class="active">Logged out</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="content">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Logged out</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Anda berhasil logged out, Anda dapat <a href="{% url "login" %}">log-in
+                            lagi</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

@@ -1,0 +1,50 @@
+{% load static %}
+
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+<link href="{% static 'css/login.css' %}" rel="stylesheet" id="bootstrap-css">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+
+
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2>Application<br> Login Page</h2>
+            <p>Login or register from here to access.</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+               <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                  <div class="form-group">
+                     <label>User Name</label>
+                     <input type="text" class="form-control" placeholder="User Name" name="username">
+                  </div>
+                  <div class="form-group">
+                     <label>Password</label>
+                     <input type="password" class="form-control" placeholder="Password" name="password">
+                  </div>
+                  <button type="submit" class="btn btn-black">Login</button>
+                        <ul class="login-more p-t-190">
+                            <li class="m-b-8">
+                                <span class="txt1">
+                                    Lupa
+                                </span>
+                                <a href="{% url 'password_reset' %}" class="txt2">
+                                    Nama Pengguna / Sandi?
+                                </a>
+                            </li>
+                            <li>
+                                <span class="txt1">
+                                    Tidak Punya akun?
+                                </span>
+                                <a href="#" class="txt2">
+                                    Daftar
+                                </a>
+                            </li>
+                        </ul>
+               </form>
+            </div>
+         </div>
+      </div>
