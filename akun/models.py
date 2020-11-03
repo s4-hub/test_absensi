@@ -8,8 +8,8 @@ Validator = RegexValidator(
 
 
 class Profil(models.Model):
-    user = models.ForeignKey(User,
-                             on_delete=models.CASCADE)
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
     nama = models.CharField(max_length=50)
     photo = models.ImageField(upload_to='users/%Y/%m/%d/',
                               blank=True)

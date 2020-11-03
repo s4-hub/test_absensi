@@ -11,8 +11,18 @@ Validator = RegexValidator(
 
 class Kategori(models.Model):
     nama_kategori = models.CharField(max_length=30)
-    jam_masuk = models.DateTimeField()
-    jam_keluar = models.DateTimeField()
+    # jam_masuk = models.DateTimeField()
+    # jam_keluar = models.DateTimeField()
+
+    # def batas_jam(self):
+    #     return self.jam_masuk + datetime.timedelta(minutes=5)
+
+
+class Jadwal(models.Model):
+    kategori = models.ForeignKey(Kategori, on_delete=models.CASCADE)
+    tgl_absen = models.DateField(auto_now_add=True)
+    jam_masuk = models.TimeField()
+    jam_pulang = models.TimeField()
 
     def batas_jam(self):
         return self.jam_masuk + datetime.timedelta(minutes=5)
@@ -20,36 +30,57 @@ class Kategori(models.Model):
 
 class Peserta(models.Model):
     user = models.ForeignKey(Profil, on_delete=models.CASCADE)
-
-    kategori_peserta = models.ForeignKey(Kategori, on_delete=models.CASCADE)
+    jadwal_peserta = models.ForeignKey(Jadwal, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.nama
 
 
+class Status(models.Model):
+    status = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.status
+
+
 class Scan(models.Model):
     # access_token = models.CharField(max_length=100)
     peserta = models.ForeignKey(Peserta, on_delete=models.CASCADE)
-    scan_jam = models.DateTimeField(auto_now_add=True)
+    scan_jam = models.TimeField(auto_now_add=True)
+    tgl_scan = models.DateField(auto_now_add=True)
 
-    def status(self):
-        qs = Kategori.objects.all()
-        for a in qs:
-            if self.scan_jam.time() < a.jam_masuk.time():
-                return 'JAM MASUK'
-            elif self.scan_jam.time() > a.jam_keluar.time():
-                return 'JAM KELUAR'
-            else:
-                return 'INVALID'
+    def status_absen(self):
+        for qs in Jadwal.objects.all():
+            if self.tgl_scan == qs.tgl_absen:
 
-    # def status(self):
-    #     if self.scan_jam < Kategori.jam_masuk:
-    #         print(scan_jam)
-    #         return 'JAM MASUK'
-    #     elif self.scan_jam > Kategori.jam_keluar:
-    #         return 'JAM PULANG'
+                if self.scan_jam < qs.jam_masuk:
+                    return 'JAM MASUK'
+                elif self.scan_jam > qs.jam_pulang and self.scan_jam < datetime.time(21, 0, 0):
+                    return 'JAM PULANG'
+                else:
+                    return 'INVALID'
+
+    # def jam_pulang(self):
+    #     if self.scan_jam.date() == datetime.date.today():
+    #         for qs in Jadwal.objects.all():
+    #             if self.scan_jam.timetz() > qs.jam_masuk.timetz():
+    #                 return self.scan_jam.astimezone().time()
     #     else:
-    #         return 'Invalid'
+    #         return 'None'
 
-    # def __str__(self):
-    #     return self.peserta.nama
+    # def save(self, *args, **kwargs):
+    #     for a in Jadwal.objects.all():
+    #         if self.scan_jam.date() == a.jam_masuk.date():
+    #             # return self.scan_jam.astimezone().time()
+    #             if self.scan_jam.time() < a.jam_masuk.time():
+    #                 if (self.status_scan.status == 'JAM MASUK'):
+    #                     self.status_scan.save(pk=3)
+    #                     return super(Scan, self).save(*args, **kwargs)
+    #                 else:
+    #                     self.status_scan.save(pk=1)
+    #                     return super(Scan, self).save(*args, **kwargs)
+    #             elif self.scan_jam.time() > a.jam_pulang.time():
+    #                 if self.jam_kegiatan() == 'JAM KELUAR':
+    #                     return 'INVALID'
+    #                 else:
+    #                     return 'JAM KELUAR'

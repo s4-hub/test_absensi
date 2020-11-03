@@ -4,8 +4,9 @@ from .models import Scan
 
 
 class ScanSerializer(serializers.ModelSerializer):
-    # peserta = serializers.StringRelatedField(many=True)
+    peserta = serializers.StringRelatedField()
 
     class Meta:
         model = Scan
-        fields = ('peserta', 'scan_jam', 'status')
+        fields = ('id', 'peserta',
+                  'tgl_scan', 'scan_jam', 'status_absen')

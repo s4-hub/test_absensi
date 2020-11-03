@@ -4,6 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 
+from datetime import datetime
+
 from .models import Scan, Peserta
 from akun.models import Profil
 from .forms import ScanForm
@@ -13,8 +15,11 @@ from .serializers import ScanSerializer
 @login_required
 def list_absen(request):
     user = request.user
+    if request.user.is_superuser:
+        datas = Scan.objects.all()
+    else:
+        datas = Scan.objects.filter(peserta__user__user=user)
 
-    datas = Scan.objects.filter(peserta__user__user=user)
     return render(request, 'absensi_apps/list.html', {'datas': datas})
 
 
@@ -64,7 +69,9 @@ def scanList(request):
     if request.user.is_superuser:
         scans = Scan.objects.all()
     else:
-        scans = Scan.objects.filter(peserta__user__user=request.user)
+        # scans = Scan.objects.filter(peserta__user__user=request.user)
+        scans = Scan.objects.all()
+
     serializer = ScanSerializer(scans, many=True)
     return Response(serializer.data)
 
